@@ -31,9 +31,9 @@ Type your final expression between the CODE tags below:
 
     return (
         <div>
-            <Question description={question1} answer={answer1}/>
+            <Question description={question1} expected_output={answer1}/>
             <br/>
-            <Question description={question2} answer={answer2}/>
+            <Question description={question2} expected_output={answer2}/>
         </div>
     );
 }
