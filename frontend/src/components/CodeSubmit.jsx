@@ -3,7 +3,7 @@ import AceEditor from 'react-ace';
 import axios from 'axios';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheckCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCheckCircle, faTimesCircle, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 
 import { toast } from "react-toastify";
 
@@ -21,7 +21,8 @@ function CodeSubmit({question, expected_output}) {
     const [theme, setTheme] = useState('tomorrow');
     // State to hold the code entered in the editor
     const [code, setCode] = useState('');
-    
+    const [isHintOpen, setIsHintOpen] = useState(false); // State to control hint modal visibility
+
     // State to hold the output/result from the submission
     const [result, setResult] = useState('');
     const [loading, setLoading] = useState(false);
@@ -36,10 +37,15 @@ function CodeSubmit({question, expected_output}) {
     };
     
     const handleSubmit = async () => {
+        if (!code) {
+            //setError('Please enter some code to submit.');
+            return;
+        }
+
         setLoading(true);
         setResult('');
         setError('');
-        
+   
         // Your Express server URL
         const API_URL = 'http://localhost:3000/api/submit';
     
@@ -134,6 +140,13 @@ function CodeSubmit({question, expected_output}) {
         });
       };
       
+      // Function to toggle the hint modal visibility
+    const toggleHintModal = () => {
+        setIsHintOpen(!isHintOpen);
+    };
+
+    const window_width = "500px";
+
     return (
         <div>
             <AceEditor
@@ -162,7 +175,7 @@ function CodeSubmit({question, expected_output}) {
             <button
                 onClick={handleSubmit}
                 disabled={loading}
-                className={`bg-gradient-to-r from-green-500 to-green-400 
+                className={`bg-gradient-to-r bg-blue-500 hover:bg-blue-700 
                     text-white font-bold py-2 px-6 mt-4 rounded-full 
                     shadow-lg transition-all ease-in-out duration-300
                     ${loading ? 'opacity-70 cursor-not-allowed' : 'hover:shadow-xl'}`}
@@ -183,6 +196,14 @@ function CodeSubmit({question, expected_output}) {
             {submissionStatus === 'rejected' && (
                 <FontAwesomeIcon icon={faTimesCircle} className="text-red-500 text-2xl pl-10" />
             )}
+            {/* Hint Button */}
+            <button
+                onClick={toggleHintModal}
+                className="text-gray-400 hover:text-gray-500 transition-all ease-in-out duration-300"
+                title="Hints"
+            >
+                <FontAwesomeIcon icon={faQuestionCircle} className="text-3xl" />
+            </button>
             {error && (
                 <div style={{ marginTop: '20px', color: 'red' }}>
                 <h3>Error:</h3>
@@ -218,6 +239,26 @@ function CodeSubmit({question, expected_output}) {
                     fontFamily: 'monospace'
                 }}
             />}
+
+            {/* Hint Modal */}
+            {isHintOpen && (
+                <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+                    <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
+                        <h2 className="text-xl font-bold mb-4">Hints</h2>
+                        <ul className="list-disc list-inside text-gray-700">
+                            <li>Make sure you're printing the right format.</li>
+                            <li>Check your variable names carefully.</li>
+                            <li>Try using a different approach if you're stuck.</li>
+                        </ul>
+                        <button
+                            onClick={toggleHintModal}
+                            className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                        >
+                            Close
+                        </button>
+                    </div>
+                </div>
+            )}
 
         </div>
     );

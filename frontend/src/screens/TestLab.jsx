@@ -37,7 +37,7 @@ Type your final expression between the CODE tags below:
     return (
         <div className="flex bg-gray-200 items-start justify-center min-h-screen w-full pb-20">
             {/* Sticky Score Display */}
-            <div className="sticky top-0 left-0 p-4 text-white bg-blue-500 font-extrabold text-2xl border border-transparent rounded-lg shadow-lg z-10">
+            <div className="sticky top-5 left-0 p-4 text-white bg-green-500 font-extrabold text-2xl border border-transparent rounded-lg shadow-lg z-10">
                 Marks: {totalScore} / 10
             </div>
 
