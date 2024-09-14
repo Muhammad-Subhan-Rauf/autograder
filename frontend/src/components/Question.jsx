@@ -8,7 +8,7 @@ const Question = ({description, expected_output}) => {
         <div>
             <Description markdown={description}/>
 
-            <CodeSubmit expected_output={expected_output}/>
+            <CodeSubmit question={description} expected_output={expected_output}/>
         </div>
     );
 };

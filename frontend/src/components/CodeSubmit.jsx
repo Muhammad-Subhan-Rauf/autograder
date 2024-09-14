@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import AceEditor from 'react-ace';
 import axios from 'axios';
 
@@ -8,8 +8,10 @@ import { toast } from "react-toastify";
 import 'ace-builds/src-noconflict/mode-python';
 import 'ace-builds/src-noconflict/theme-tomorrow';
 import 'ace-builds/src-noconflict/ext-language_tools';
+import { GlobalContext } from '../GlobalContext';
 
-function CodeSubmit({expected_output}) {
+function CodeSubmit({question, expected_output}) {
+    const { marks, updateMarks } = useContext(GlobalContext); // Use the context
 
     // Add state variables
     const [mode, setMode] = useState('python');
@@ -83,6 +85,9 @@ function CodeSubmit({expected_output}) {
                         setResultMessage(`Success: ${resultResponse.data.stdout || "No output"}`);
                         setIsError(false);
                         showSuccessToast('Correct! Great Job!');
+                        
+                        updateMarks(question, 1);  // Assume 1 mark for correct answer
+
                     } else if (resultResponse.data.status.id === 4) {  // "Rejected"
                         // Wrong Answer
                         setResultMessage(resultResponse.data.stderr || resultResponse.data.compile_output || "Wrong Answer: Code runs fine but the answer is wrong");
@@ -152,7 +157,7 @@ function CodeSubmit({expected_output}) {
                 onClick={handleSubmit}
                 disabled={loading}
                 className={`bg-gradient-to-r from-green-500 to-green-400 
-                    text-white font-bold py-2 px-6 rounded-full 
+                    text-white font-bold py-2 px-6 mt-4 rounded-full 
                     shadow-lg transition-all ease-in-out duration-300
                     ${loading ? 'opacity-70 cursor-not-allowed' : 'hover:shadow-xl'}`}
             >
