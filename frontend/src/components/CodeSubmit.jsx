@@ -205,7 +205,7 @@ function CodeSubmit({question, expected_output}) {
             {isError && <textarea
                 value={resultMessage}
                 readOnly
-                rows={6}
+                rows={2}
                 style={{
                     width: '100%',
                     marginTop: '20px',
@@ -214,7 +214,7 @@ function CodeSubmit({question, expected_output}) {
                     border: '1px solid',
                     borderColor: isError ? 'red' : 'green',
                     padding: '10px',
-                    resize: 'none',
+                    resize: 'vertical',  // Allows vertical resizing only
                     fontFamily: 'monospace'
                 }}
             />}
