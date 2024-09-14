@@ -9,7 +9,7 @@ import 'ace-builds/src-noconflict/mode-python';
 import 'ace-builds/src-noconflict/theme-tomorrow';
 import 'ace-builds/src-noconflict/ext-language_tools';
 
-function CodeSubmit() {
+function CodeSubmit({expected_output}) {
 
     // Add state variables
     const [mode, setMode] = useState('python');
@@ -40,7 +40,7 @@ function CodeSubmit() {
         // Replace with actual code and optional test cases
         //const code = code;  // Get this from AceEditor or user input
         const stdin = '3\n';                    // Optional input for test cases (stdin)
-        const expected_output = '7'; // Optional expected output for comparison
+        //const expected_output = '7'; // Optional expected output for comparison
     
         try {
             // Send the source code, stdin, and expected_output to the server
@@ -82,10 +82,10 @@ function CodeSubmit() {
                     if (resultResponse.data.status.id === 3) {  // "Accepted"
                         setResultMessage(`Success: ${resultResponse.data.stdout || "No output"}`);
                         setIsError(false);
-                        showSuccessToast('Compiled Successfully!');
+                        showSuccessToast('Correct! Great Job!');
                     } else if (resultResponse.data.status.id === 4) {  // "Rejected"
                         // Wrong Answer
-                        setResultMessage(resultResponse.data.stderr || resultResponse.data.compile_output || "Wrong Answer");
+                        setResultMessage(resultResponse.data.stderr || resultResponse.data.compile_output || "Wrong Answer: Code runs fine but the answer is wrong");
                         setIsError(true);
                         showErrorToast('Wrong Answer!');
                     } else {  // Error case (compile error, runtime error)
@@ -139,7 +139,7 @@ function CodeSubmit() {
                 name="comp102"
                 className="border border-blue-500 rounded"
                 width="500px"
-                height="250px" // Set the desired height here
+                height="150px" // Set the desired height here
                 fontSize={14}
                 lineHeight={20}
                 showPrintMargin={true}
@@ -158,9 +158,19 @@ function CodeSubmit() {
             <button
                 onClick={handleSubmit}
                 disabled={loading}
-                style={{ marginTop: '10px' }}
+                className={`bg-gradient-to-r from-green-500 to-green-400 
+                    text-white font-bold py-2 px-6 rounded-full 
+                    shadow-lg transition-all ease-in-out duration-300
+                    ${loading ? 'opacity-70 cursor-not-allowed' : 'hover:shadow-xl'}`}
             >
-                {loading ? 'Submitting...' : 'Submit Code'}
+                {loading ? (
+                    <>
+                        <span className="animate-spin rounded-full h-5 w-5 border-t-2 border-white inline-block mr-2"></span>
+                        Submitting...
+                    </>
+                ) : (
+                    'Submit Code'
+                )}
             </button>
             {error && (
                 <div style={{ marginTop: '20px', color: 'red' }}>
