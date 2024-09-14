@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import AceEditor from 'react-ace';
 import axios from 'axios';
 
+import { ToastContainer, toast } from "react-toastify";
+
 // Import required Ace modules
 import 'ace-builds/src-noconflict/mode-python';
 import 'ace-builds/src-noconflict/theme-tomorrow';
@@ -28,7 +30,7 @@ function CodeSubmit() {
         setLoading(true);
         setResult('');
         setError('');
-    
+        
         // Your Express server URL
         const API_URL = 'http://localhost:3000/api/submit';
     
@@ -74,6 +76,7 @@ function CodeSubmit() {
                 // Check if the status indicates the result is ready
                 if (resultResponse.data.status.id > 2) {  // Status ID > 2 means completed
                     setResult(resultResponse.data);  // Set the result once it's ready
+                    showSuccessToast('Compiled Successfully!');
                     clearInterval(intervalId);  // Stop polling
                 } else {
                     console.log('Result not ready yet, polling again...');
@@ -85,8 +88,42 @@ function CodeSubmit() {
         }, 1000);  // Poll every 3 seconds
     };
 
+    const showSuccessToast = (msg) => {
+        toast.success(msg || `Compiled Successfully!`, {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      };
+      const showErrorToast = (msg) => {
+        toast.error(msg || `Something went wrong! Please try again.`, {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      };
+      
     return (
         <div>
+            <ToastContainer
+                position="top-right"
+                autoClose={2000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
             <AceEditor
                 placeholder="# Type your code here..."
                 mode={mode}
