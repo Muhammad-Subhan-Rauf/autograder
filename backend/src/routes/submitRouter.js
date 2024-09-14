@@ -20,6 +20,8 @@ submitRouter.post('/submit', async (req, res) => {
                 expected_output: expected_output    // Optional: Expected output to compare with
             };
 
+            console.log('Data:', data);
+
             // Make a POST request to Judge0
             const judge0Response = await axios.post(submission_url, data, { headers });
 

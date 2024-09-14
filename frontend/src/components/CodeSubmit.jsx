@@ -33,9 +33,9 @@ function CodeSubmit() {
         const API_URL = 'http://localhost:3000/api/submit';
     
         // Replace with actual code and optional test cases
-        const code = 'print("Hello, World!")';  // Get this from AceEditor or user input
+        //const code = code;  // Get this from AceEditor or user input
         const stdin = '3\n';                    // Optional input for test cases (stdin)
-        const expected_output = 'Hello, World!\n'; // Optional expected output for comparison
+        const expected_output = 'Hello, World!'; // Optional expected output for comparison
     
         try {
             // Send the source code, stdin, and expected_output to the server
@@ -49,10 +49,10 @@ function CodeSubmit() {
             const {token} = response.data;
             
             // Start polling to get the result using the token
-            pollForResult(token);
+            //pollForResult(token);
     
             // // Display the token as the result
-            // setResult(`Submission token: ${data.token}`);
+            setResult(`Submission token: ${token}`);
         } catch (err) {
             console.error('Error:', err);
             setError('An error occurred while submitting your code.');
