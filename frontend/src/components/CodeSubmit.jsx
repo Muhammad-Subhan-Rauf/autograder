@@ -2,6 +2,9 @@ import React, { useContext, useState } from 'react';
 import AceEditor from 'react-ace';
 import axios from 'axios';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheckCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+
 import { toast } from "react-toastify";
 
 // Import required Ace modules
@@ -25,6 +28,7 @@ function CodeSubmit({question, expected_output}) {
     const [resultMessage, setResultMessage] = useState(''); // Holds the result or error message
     const [isError, setIsError] = useState(false); // Tracks if it's an error
     const [error, setError] = useState('');
+    const [submissionStatus, setSubmissionStatus] = useState(''); // Tracks the submission status
   
     // Handler for code changes in the editor
     const handleCodeChange = (newCode) => {
@@ -87,16 +91,18 @@ function CodeSubmit({question, expected_output}) {
                         showSuccessToast('Correct! Great Job!');
                         
                         updateMarks(question, 1);  // Assume 1 mark for correct answer
-
+                        setSubmissionStatus('accepted');
                     } else if (resultResponse.data.status.id === 4) {  // "Rejected"
                         // Wrong Answer
                         setResultMessage(resultResponse.data.stderr || resultResponse.data.compile_output || "Wrong Answer: Code runs fine but the answer is wrong");
                         setIsError(true);
                         showErrorToast('Wrong Answer!');
+                        setSubmissionStatus('rejected');
                     } else if (resultResponse.data.status.id > 4) {  // Error case (compile error, runtime error)
                         setResultMessage(resultResponse.data.stderr || resultResponse.data.compile_output || "An error occurred.");
                         setIsError(true);
                         showErrorToast('Compilation or execution failed!');
+                        setSubmissionStatus('rejected');
                     }
             } catch (err) {
                 console.error('Error fetching result:', err);
@@ -170,6 +176,13 @@ function CodeSubmit({question, expected_output}) {
                     'Submit Code'
                 )}
             </button>
+            {/* Display tick or cross based on submission status */}
+            {submissionStatus === 'accepted' && (
+                <FontAwesomeIcon icon={faCheckCircle} className="text-green-500 text-2xl pl-10" />
+            )}
+            {submissionStatus === 'rejected' && (
+                <FontAwesomeIcon icon={faTimesCircle} className="text-red-500 text-2xl pl-10" />
+            )}
             {error && (
                 <div style={{ marginTop: '20px', color: 'red' }}>
                 <h3>Error:</h3>
