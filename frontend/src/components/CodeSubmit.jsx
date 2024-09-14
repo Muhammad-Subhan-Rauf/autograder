@@ -16,9 +16,12 @@ function CodeSubmit() {
     const [theme, setTheme] = useState('tomorrow');
     // State to hold the code entered in the editor
     const [code, setCode] = useState('');
+    
     // State to hold the output/result from the submission
     const [result, setResult] = useState('');
     const [loading, setLoading] = useState(false);
+    const [resultMessage, setResultMessage] = useState(''); // Holds the result or error message
+    const [isError, setIsError] = useState(false); // Tracks if it's an error
     const [error, setError] = useState('');
   
     // Handler for code changes in the editor
@@ -37,7 +40,7 @@ function CodeSubmit() {
         // Replace with actual code and optional test cases
         //const code = code;  // Get this from AceEditor or user input
         const stdin = '3\n';                    // Optional input for test cases (stdin)
-        const expected_output = 'Hello, World!'; // Optional expected output for comparison
+        const expected_output = '7'; // Optional expected output for comparison
     
         try {
             // Send the source code, stdin, and expected_output to the server
@@ -73,14 +76,23 @@ function CodeSubmit() {
             try {
                 const resultResponse = await axios.get(API_RESULT_URL);
 
-                // Check if the status indicates the result is ready
-                if (resultResponse.data.status.id > 2) {  // Status ID > 2 means completed
-                    setResult(resultResponse.data);  // Set the result once it's ready
-                    showSuccessToast('Compiled Successfully!');
-                    clearInterval(intervalId);  // Stop polling
-                } else {
-                    console.log('Result not ready yet, polling again...');
-                }
+                clearInterval(intervalId);
+
+                    // Success case (status ID 3 - Accepted)
+                    if (resultResponse.data.status.id === 3) {  // "Accepted"
+                        setResultMessage(`Success: ${resultResponse.data.stdout || "No output"}`);
+                        setIsError(false);
+                        showSuccessToast('Compiled Successfully!');
+                    } else if (resultResponse.data.status.id === 4) {  // "Rejected"
+                        // Wrong Answer
+                        setResultMessage(resultResponse.data.stderr || resultResponse.data.compile_output || "Wrong Answer");
+                        setIsError(true);
+                        showErrorToast('Wrong Answer!');
+                    } else {  // Error case (compile error, runtime error)
+                        setResultMessage(resultResponse.data.stderr || resultResponse.data.compile_output || "An error occurred.");
+                        setIsError(true);
+                        showErrorToast('Compilation or execution failed!');
+                    }
             } catch (err) {
                 console.error('Error fetching result:', err);
                 setError('An error occurred while fetching the result.');
@@ -156,7 +168,7 @@ function CodeSubmit() {
                 <pre>{error}</pre>
                 </div>
             )}
-            {result && (
+            {/* {result && (
                 <div style={{ marginTop: '20px' }}>
                     <h3>Result:</h3>
                     <p><strong>Output:</strong> {result.stdout || "No output"}</p>
@@ -166,7 +178,26 @@ function CodeSubmit() {
                     {result.stderr && <p><strong>Error:</strong> {result.stderr}</p>}
                     {result.compile_output && <p><strong>Compile Output:</strong> {result.compile_output}</p>}
                 </div>
-            )}  
+            )}   */}
+
+            {/* Readonly Textarea for displaying the result */}
+            {isError && <textarea
+                value={resultMessage}
+                readOnly
+                rows={6}
+                style={{
+                    width: '100%',
+                    marginTop: '20px',
+                    backgroundColor: '#f8f9fa',
+                    color: isError ? 'red' : 'green',
+                    border: '1px solid',
+                    borderColor: isError ? 'red' : 'green',
+                    padding: '10px',
+                    resize: 'none',
+                    fontFamily: 'monospace'
+                }}
+            />}
+
         </div>
     );
 }
