@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import CodeSubmit from '../components/CodeSubmit';
 import Question from '../components/Question';
 
 function TextLab() {
