@@ -1,2 +1,2 @@
-# autograder-backend
+# autograder
 A basic autograder Backend
