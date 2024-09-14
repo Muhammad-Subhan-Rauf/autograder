@@ -120,7 +120,7 @@ function CodeSubmit({question, expected_output}) {
     const showSuccessToast = (msg) => {
         toast.success(msg || `Compiled Successfully!`, {
           position: "top-right",
-          autoClose: 1000,
+          autoClose: 2000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -131,7 +131,7 @@ function CodeSubmit({question, expected_output}) {
       const showErrorToast = (msg) => {
         toast.error(msg || `Something went wrong! Please try again.`, {
           position: "top-right",
-          autoClose: 1000,
+          autoClose: 2000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -191,10 +191,10 @@ function CodeSubmit({question, expected_output}) {
             </button>
             {/* Display tick or cross based on submission status */}
             {submissionStatus === 'accepted' && (
-                <FontAwesomeIcon icon={faCheckCircle} className="text-green-500 text-2xl pl-10" />
+                <FontAwesomeIcon icon={faCheckCircle} className="text-green-500 text-3xl pl-10" />
             )}
             {submissionStatus === 'rejected' && (
-                <FontAwesomeIcon icon={faTimesCircle} className="text-red-500 text-2xl pl-10" />
+                <FontAwesomeIcon icon={faTimesCircle} className="text-red-500 text-3xl pl-10" />
             )}
             {/* Hint Button */}
             <button
@@ -242,23 +242,33 @@ function CodeSubmit({question, expected_output}) {
 
             {/* Hint Modal */}
             {isHintOpen && (
-                <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
-                    <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
+                <div
+                    className={`fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50 
+                    transition-opacity duration-300 ease-out ${isHintOpen ? 'opacity-100' : 'opacity-0'}`}
+                >
+                    <div
+                        className={`relative bg-white p-6 rounded-lg shadow-lg w-1/4 transform 
+                        transition-transform duration-300 ease-out ${isHintOpen ? 'scale-100' : 'scale-95'}`}
+                    >
+                        {/* Close Button - Cross in the upper-right corner */}
+                        <button
+                            onClick={toggleHintModal}
+                            className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 transition-colors duration-300 font-bold"
+                            title="Close"
+                        >
+                            <FontAwesomeIcon icon={faTimesCircle} className="text-2xl" />
+                        </button>
+
                         <h2 className="text-xl font-bold mb-4">Hints</h2>
                         <ul className="list-disc list-inside text-gray-700">
                             <li>Make sure you're printing the right format.</li>
                             <li>Check your variable names carefully.</li>
                             <li>Try using a different approach if you're stuck.</li>
                         </ul>
-                        <button
-                            onClick={toggleHintModal}
-                            className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                        >
-                            Close
-                        </button>
                     </div>
                 </div>
             )}
+
 
         </div>
     );
