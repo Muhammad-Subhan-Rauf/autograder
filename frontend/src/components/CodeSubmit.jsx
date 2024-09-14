@@ -49,10 +49,10 @@ function CodeSubmit() {
             const {token} = response.data;
             
             // Start polling to get the result using the token
-            //pollForResult(token);
+            pollForResult(token);
     
             // // Display the token as the result
-            setResult(`Submission token: ${token}`);
+            //setResult(`Submission token: ${token}`);
         } catch (err) {
             console.error('Error:', err);
             setError('An error occurred while submitting your code.');
@@ -63,6 +63,8 @@ function CodeSubmit() {
     
     // Polling function to check the result using the token
     const pollForResult = (token) => {
+        console.log(`polling ${token}`);
+        
         const API_RESULT_URL = `http://localhost:3000/api/result/${token}`;
 
         const intervalId = setInterval(async () => {
@@ -123,8 +125,13 @@ function CodeSubmit() {
             )}
             {result && (
                 <div style={{ marginTop: '20px' }}>
-                <h3>Result:</h3>
-                <pre>{result}</pre>
+                    <h3>Result:</h3>
+                    <p><strong>Output:</strong> {result.stdout || "No output"}</p>
+                    <p><strong>Time:</strong> {result.time || "N/A"}</p>
+                    <p><strong>Memory:</strong> {result.memory || "N/A"} KB</p>
+                    <p><strong>Status:</strong> {result.status ? result.status.description : "Pending"}</p>
+                    {result.stderr && <p><strong>Error:</strong> {result.stderr}</p>}
+                    {result.compile_output && <p><strong>Compile Output:</strong> {result.compile_output}</p>}
                 </div>
             )}  
         </div>
