@@ -10,7 +10,7 @@ function TextLab() {
 Write code to print the following exactly as shown:
 
 \`\`\`
-Hello, World!
+\'Hello, World!\'
 \`\`\`
 `;
     const answer1 = "Hello, World!";
