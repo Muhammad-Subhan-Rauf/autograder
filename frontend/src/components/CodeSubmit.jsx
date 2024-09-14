@@ -114,16 +114,12 @@ function CodeSubmit() {
     return (
         <div>
             <ToastContainer
-                position="top-right"
-                autoClose={2000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-            />
+            position="top-right"
+            autoClose={2000}
+            hideProgressBar={true}
+            closeOnClick
+            draggable
+        />
             <AceEditor
                 placeholder="# Type your code here..."
                 mode={mode}
