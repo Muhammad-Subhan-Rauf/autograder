@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import AceEditor from 'react-ace';
 import axios from 'axios';
 
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 // Import required Ace modules
 import 'ace-builds/src-noconflict/mode-python';
@@ -88,7 +88,7 @@ function CodeSubmit({expected_output}) {
                         setResultMessage(resultResponse.data.stderr || resultResponse.data.compile_output || "Wrong Answer: Code runs fine but the answer is wrong");
                         setIsError(true);
                         showErrorToast('Wrong Answer!');
-                    } else {  // Error case (compile error, runtime error)
+                    } else if (resultResponse.data.status.id > 4) {  // Error case (compile error, runtime error)
                         setResultMessage(resultResponse.data.stderr || resultResponse.data.compile_output || "An error occurred.");
                         setIsError(true);
                         showErrorToast('Compilation or execution failed!');
@@ -97,7 +97,7 @@ function CodeSubmit({expected_output}) {
                 console.error('Error fetching result:', err);
                 setError('An error occurred while fetching the result.');
             }
-        }, 1000);  // Poll every 3 seconds
+        }, 2000);  // Poll every 2 seconds
     };
 
     const showSuccessToast = (msg) => {
@@ -125,13 +125,6 @@ function CodeSubmit({expected_output}) {
       
     return (
         <div>
-            <ToastContainer
-            position="top-right"
-            autoClose={2000}
-            hideProgressBar={true}
-            closeOnClick
-            draggable
-        />
             <AceEditor
                 placeholder="# Type your code here..."
                 mode={mode}
