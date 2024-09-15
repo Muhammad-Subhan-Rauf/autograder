@@ -7,7 +7,7 @@ const CalendarRow = ({ weekNumber, row }) => {
             <td className="border p-2 text-center">{weekNumber}</td>
             <td className="border p-2">{row.date}</td>
             <td className="border p-2">
-                <div className="font-semibold">{row.lecture.title || 'No Lecture'}</div>
+                <div className="font-semibold">{row.lecture.title}</div>
                 <LinksList links={row.lecture.links} />
             </td>
             <td className="border p-2">
@@ -32,7 +32,7 @@ const CalendarRow = ({ weekNumber, row }) => {
                         )}
                     </div>
                 ) : (
-                    <span className="text-gray-500">N/A</span>
+                    <span className="text-gray-500"> </span>
                 )}
             </td>
         </tr>

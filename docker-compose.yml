@@ -3,16 +3,30 @@
 version: '3.8'
 
 services:
-  portal-frontend:
-    build:
-      context: ./frontend
-    container_name: portal-frontend
-    ports:
-      - "${FRONTEND_PORT}:40001" # Map port 40001 on the host to port 40001 in the container
-    volumes:
-      # Ensure that the React build output directory is correctly mounted
-      - ./frontend/dist:/var/www/localhost/htdocs
+  # portal-frontend:
+  #   build:
+  #     context: ./frontend
+  #   container_name: portal-frontend
+  #   ports:
+  #     - "${FRONTEND_PORT}:40001" # Map port 40001 on the host to port 40001 in the container
+  #   volumes:
+  #     # Ensure that the React build output directory is correctly mounted
+  #     - ./frontend/dist:/var/www/localhost/htdocs
   
+  portal-nextjs:
+    build:
+      context: ./next
+      dockerfile: Dockerfile
+    container_name: portal-nextjs
+    ports:
+      - "${FRONTEND_PORT}:40001"
+    volumes:
+      - ./next/out:/var/www/localhost/htdocs
+    environment:
+      - NODE_ENV=production
+    depends_on:
+      - portal-backend
+
   portal-backend:
     build:
     # Assuming you have a Dockerfile in the backend directory
@@ -28,7 +42,9 @@ services:
     environment:
       # Set environment variables as needed
       - NODE_ENV=production 
-    
+  
+  
+
     # healthcheck:
     #   test: ["CMD", "curl", "-f", "http://fcc-portal-backend:3000/health"]
     #   interval: 30s
