@@ -4,14 +4,20 @@
 npx create-next-app@latest
 ```
 
-# Standalone Docker container for testing:
+# Enable Static Export:
 
-First build:
-```bash
-docker build -t my-nextjs-app .
+To enable static export, add the following in your `next.config.js`:
+
+```js
+const nextConfig = {
+    output: 'export',
+}
 ```
 
 Then run:
+
 ```bash
-docker run -d -p 3000:3000 --name nextjs-app my-nextjs-app
+npx run build
 ```
+
+This will generate a static website in the `.out/` folder
