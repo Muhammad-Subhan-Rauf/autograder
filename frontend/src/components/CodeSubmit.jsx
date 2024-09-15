@@ -29,6 +29,7 @@ function CodeSubmit({question, expected_output}) {
     const [resultMessage, setResultMessage] = useState(''); // Holds the result or error message
     const [isError, setIsError] = useState(false); // Tracks if it's an error
     const [error, setError] = useState('');
+    const [errorString, setErrorString] = useState('');
     const [submissionStatus, setSubmissionStatus] = useState(''); // Tracks the submission status
   
     // Handler for code changes in the editor
@@ -71,7 +72,7 @@ function CodeSubmit({question, expected_output}) {
             // // Display the token as the result
             //setResult(`Submission token: ${token}`);
         } catch (err) {
-            console.error('Error:', err);
+            console.error(`Critical Error: ${err.message} (${err.code})`);
             setError('An error occurred while submitting your code.');
         } finally {
             setLoading(false);

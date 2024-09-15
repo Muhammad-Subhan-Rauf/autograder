@@ -1,0 +1,41 @@
+# Apps in a separate containers:
+
+version: '3.8'
+
+services:
+  portal-frontend:
+    build:
+      context: ./frontend
+    container_name: portal-frontend
+    ports:
+      - "${FRONTEND_PORT}:40001" # Map port 40001 on the host to port 40001 in the container
+    volumes:
+      # Ensure that the React build output directory is correctly mounted
+      - ./frontend/dist:/var/www/localhost/htdocs
+  
+  portal-backend:
+    build:
+    # Assuming you have a Dockerfile in the backend directory
+      context: ./backend
+    container_name: portal-backend
+    ports:
+      - "${BACKEND_PORT}:3000" # Map Express app port to host
+    volumes:
+      - ./backend:/usr/src/server
+    # Replace 'npm start' with your command to start the Express app
+    command: npm start
+    
+    environment:
+      # Set environment variables as needed
+      - NODE_ENV=production 
+    
+    # healthcheck:
+    #   test: ["CMD", "curl", "-f", "http://fcc-portal-backend:3000/health"]
+    #   interval: 30s
+    #   timeout: 10s
+    #   retries: 5
+
+networks:
+  public-network:
+    driver: bridge
+  

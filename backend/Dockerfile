@@ -1,17 +1,25 @@
-# Use an official Python runtime as a parent image
-FROM python:3.9-slim
+# Use an official Node.js runtime as a base image
+FROM node:16-alpine
 
 # Set the working directory in the container
-WORKDIR /app
+WORKDIR /usr/src/server
 
-# Copy the content of the src directory into the container at /app
-COPY ./src /app
+# Copy package.json and package-lock.json (or yarn.lock) to leverage Docker layer caching
+COPY package*.json ./
 
-# Install any necessary dependencies
-RUN pip install --no-cache-dir flask flask-cors
+# Install dependencies
+# Using `npm ci` here is recommended for production builds (it's faster and more reliable for CI/CD)
+RUN npm ci --only=production
 
-# Expose the port Flask will run on
-EXPOSE 5000
+# Copy the rest of your application's code
+COPY . .
 
-# Run the Flask application
-CMD ["python3", "mock_server.py"]
+# Change working directory to src folder where server.js is located
+WORKDIR /usr/src/server/src
+
+# Your app binds to port 3000, so use the EXPOSE instruction to have it mapped by the docker daemon
+EXPOSE 3000
+
+# Define the command to run your app
+# This could vary depending on how you start your app (e.g., you might use `node server.js`)
+CMD [ "node", "server.js" ]
