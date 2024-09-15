@@ -1,6 +1,7 @@
 import path from 'path';
 import { promises as fs } from 'fs';
 import React from 'react';
+import CalendarRow from './CalendarRow';
 
 // CalendarTable component
 export default async function CalendarTable() {
@@ -23,79 +24,15 @@ export default async function CalendarTable() {
           </tr>
         </thead>
         <tbody>
-          {data.calendar.map((week, weekIndex) => (
-            <React.Fragment key={weekIndex}>
-              {week.rows.map((row, rowIndex) => (
-                <tr key={rowIndex} className="bg-[#DAE5EC] transition-all duration-200 hover:bg-[#B8D1DC]">
-                  <td className="border p-2">{week.weekNumber}</td>
-                  <td className="border p-2">{row.date}</td>
-                  <td className="border p-2">
-                    {row.lecture.title}
-                    {row.lecture.links.length > 0 && (
-                      <ul>
-                        {row.lecture.links.map((link, linkIndex) => (
-                          <li key={linkIndex}>
-                            <a href={link.href} className="text-blue-500 hover:underline">
-                              {link.label}
-                            </a>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </td>
-                  <td className="border p-2">
-                    {row.textbook.length > 0 ? (
-                      <ul>
-                        {row.textbook.map((text, textIndex) => (
-                          <li key={textIndex}>
-                            <a href={text.href} className="text-blue-500 hover:underline">
-                              {text.label}
-                            </a>
-                          </li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <span>No Readings</span>
-                    )}
-                  </td>
-                  <td className="border p-2">
-                    {row.labLinks.length > 0 ? (
-                      <ul>
-                        {row.labLinks.map((lab, labIndex) => (
-                          <li key={labIndex}>
-                            <a href={lab.href} className="text-blue-500 hover:underline">
-                              {lab.label}
-                            </a>
-                          </li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <span>No Labs</span>
-                    )}
-                  </td>
-                  <td className="border p-2">
-                    {row.homework ? (
-                      <>
-                        <a href={row.homework.href} className="text-blue-500 hover:underline">
-                          {row.homework.label}
-                        </a>
-                        <br />
-                        {row.homework.dueDate && <span>{row.homework.dueDate}</span>}
-                        <br />
-                        {row.homework.solutionHref && (
-                          <a href={row.homework.solutionHref} className="text-blue-500 hover:underline">
-                            {row.homework.solutionLabel}
-                          </a>
-                        )}
-                      </>
-                    ) : (
-                      <span>No Homework</span>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </React.Fragment>
-          ))}
+            {data.calendar.map((week, weekIndex) => (
+                week.rows.map((row, rowIndex) => (
+                    <CalendarRow 
+                        key={`${weekIndex}-${rowIndex}`} 
+                        weekNumber={week.weekNumber} 
+                        row={row} 
+                    />
+                ))
+            ))}
         </tbody>
       </table>
     </div>
