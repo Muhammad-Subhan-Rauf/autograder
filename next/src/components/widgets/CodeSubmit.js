@@ -91,14 +91,10 @@ const CodeSubmit = ({questionId, stdin, expectedOutput, prefillCode='', feedback
             // Start polling to get the result using the token
             pollForResult(`${API_RESULT_URL}/${token}`);
     
-            // // Display the token as the result
-            //setResult(`Submission token: ${token}`);
         } catch (err) {
-            //console.error(`Critical Error: ${err.message} (${err.code})`);
             setError(true);
             setFeedbackMessage(`Critical Error: ${err.message} (${err.code})\nAn error occurred while submitting your code.`);
         } finally {
-            setError(false);
             setLoading(false);
         }
     }
