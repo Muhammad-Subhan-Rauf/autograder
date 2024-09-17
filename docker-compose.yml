@@ -13,19 +13,18 @@ services:
   #     # Ensure that the React build output directory is correctly mounted
   #     - ./frontend/dist:/var/www/localhost/htdocs
   
-  portal-nextjs:
+  portal-frontend:
     build:
       context: ./next
-      dockerfile: Dockerfile
-    container_name: portal-nextjs
+    container_name: portal-frontend
     ports:
       - "${FRONTEND_PORT}:40001"
     volumes:
-      - ./next/out:/var/www/localhost/htdocs
-    environment:
-      - NODE_ENV=production
-    depends_on:
-      - portal-backend
+      - ./next/dist:/var/www/localhost/htdocs
+    # environment:
+    #   - NODE_ENV=production
+    # depends_on:
+    #   - portal-backend
 
   portal-backend:
     build:

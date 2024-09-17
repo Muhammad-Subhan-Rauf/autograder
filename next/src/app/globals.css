@@ -25,3 +25,14 @@ body {
     text-wrap: balance;
   }
 }
+
+
+h1 {
+  @apply text-3xl font-bold;
+  padding-bottom: 10px;
+}
+
+h2 {
+  @apply text-2xl font-bold;
+  padding-bottom: 10px;
+}

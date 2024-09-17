@@ -1,6 +1,6 @@
+'use client';
 
-import CalendarHeader from "@/components/CalendarHeader";
-import CalendarTable from "@/components/CalendarTable";
+import Calendar from "@/components/gui/Calendar";
 import Link from "next/link";
 
 export default function Home() {
@@ -13,17 +13,7 @@ export default function Home() {
                 Student Portal
             </Link>
 
-
-            <div className="p-8 bg-white rounded-lg shadow-lg max-w-[70%] w-full border border-blue-500 mt-10 md:mt-20">
-                {/* <h1 className="text-2xl md:text-2xl font-bold text-center text-blue-500 mb-4">
-                    Lab 1
-                </h1> */}
-                
-                <CalendarHeader />
-
-                <CalendarTable />
-
-            </div>
+            <Calendar />
         </div>
     );
 }

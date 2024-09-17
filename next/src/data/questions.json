@@ -1,0 +1,15 @@
+{
+    "questions": [
+      {
+        "id": "q1",
+        "description": "Write code to print the following exactly as shown:\n\n```\nHi!\n```",
+        "expected_output": "Hello, World!"
+      },
+      {
+        "id": "q2",
+        "description": "Convert the following math expression to Python code:\n\n\\[ 3 + 4 \\]",
+        "expected_output": "7"
+      }
+    ]
+  }
+  
