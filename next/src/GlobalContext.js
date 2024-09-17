@@ -6,8 +6,8 @@ import React, { createContext, useEffect, useState } from 'react';
 // Create the context
 export const GlobalContext = createContext();
 
-const API_SUBMIT_URL = 'http://fakhirshaheen.com:3000/api/submit';
-const API_RESULT_URL = 'http://fakhirshaheen.com:3000/api/result';
+const API_SUBMIT_URL = 'http://fakhirshaheen.com/api/submit';
+const API_RESULT_URL = 'http://fakhirshaheen.com/api/result';
 
 // Create a provider component
 export const GlobalProvider = ({ children }) => {
