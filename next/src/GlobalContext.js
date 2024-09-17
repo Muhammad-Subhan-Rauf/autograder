@@ -6,8 +6,15 @@ import React, { createContext, useEffect, useState } from 'react';
 // Create the context
 export const GlobalContext = createContext();
 
+//---------------------------------------------------------------
+// Development
+// const API_SUBMIT_URL = 'http://localhost:3000/api/submit';
+// const API_RESULT_URL = 'http://localhost:3000/api/result';
+//---------------------------------------------------------------
+// Production
 const API_SUBMIT_URL = 'https://fakhirshaheen.com/api/submit';
 const API_RESULT_URL = 'https://fakhirshaheen.com/api/result';
+//---------------------------------------------------------------
 
 // Create a provider component
 export const GlobalProvider = ({ children }) => {
@@ -16,6 +23,12 @@ export const GlobalProvider = ({ children }) => {
         q2: 0,
         q3: 0,
         q4: 0,
+        q5: 0,
+        q6: 0,
+        q7: 0,
+        q8: 0,
+        q9: 0,
+        q10: 0,
     });
 
     // Function to update marks for a specific question
