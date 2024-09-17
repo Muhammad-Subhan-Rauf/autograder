@@ -17,6 +17,7 @@ Write a program that prints the following on the screen:
 print("Hello, World!")
 \`\`\`
 `,
+            stdin: '',
             expectedOutput: 'Hello, World!'
         },
         { 
@@ -25,6 +26,7 @@ print("Hello, World!")
 ## Question 2
 Print the square and cube of integer 10:
 `,
+            stdin: '10',
             expectedOutput: '100\n1000'
         },
         { 
@@ -33,6 +35,7 @@ Print the square and cube of integer 10:
 ## Question 3
 Ask the user to enter two numbers and print the sum of the two numbers
 `,
+            stdin: '',
             expectedOutput: '3'
         },
         { 
@@ -45,6 +48,7 @@ Write a program that prints the following on the screen:
 print("7")
 \`\`\`
 `,
+            stdin: '',
             expectedOutput: '7'
         },
     ];

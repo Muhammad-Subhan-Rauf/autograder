@@ -28,7 +28,7 @@ import 'ace-builds/src-noconflict/ext-language_tools';
  * @param {string} hints - The hints for the question
  * @returns {JSX.Element} The code submission component
 */
-const CodeSubmit = ({questionId, expectedOutput, prefillCode='', feedback=false, hints=''}) => {
+const CodeSubmit = ({questionId, stdin, expectedOutput, prefillCode='', feedback=false, hints=''}) => {
 
     //----------------------------------------------------------------
     // Global variables:
@@ -70,7 +70,7 @@ const CodeSubmit = ({questionId, expectedOutput, prefillCode='', feedback=false,
         //--------------------------------------------------------------------------------
         // Replace with actual code and optional test cases
         //const code = code;  // Get this from AceEditor or user input
-        const stdin = '3\n';                    // Optional input for test cases (stdin)
+        //const stdin = '3\n';                    // Optional input for test cases (stdin)
         //const expected_output = '7'; // Optional expected output for comparison
         //--------------------------------------------------------------------------------
 
@@ -79,8 +79,8 @@ const CodeSubmit = ({questionId, expectedOutput, prefillCode='', feedback=false,
             // Send the source code, stdin, and expected_output to the server
             const response = await axios.post(API_SUBMIT_URL, {
                 source_code: code,
-                stdin: stdin,  // Optional: Remove if not needed
-                expected_output: expectedOutput  // Optional: Remove if not needed
+                stdin: stdin,
+                expected_output: expectedOutput
             });
             
             setUploaded(true);

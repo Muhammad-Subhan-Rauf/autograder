@@ -23,8 +23,8 @@ services:
       - ./next/dist:/var/www/localhost/htdocs
     # environment:
     #   - NODE_ENV=production
-    # depends_on:
-    #   - portal-backend
+    depends_on:
+      - portal-backend
 
   portal-backend:
     build:

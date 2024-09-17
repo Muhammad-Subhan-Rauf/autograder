@@ -6,6 +6,7 @@ import CodeSubmit from './CodeSubmit';
  * Question component
  * @param {string} questionId - The question ID
  * @param {string} description - The question description
+ * @param {string} stdin - The standard input for the question
  * @param {string} expectedOutput - The expected output
  * @param {boolean} feedback - Whether feedback is enabled
  * @param {boolean} graded - Whether the question is graded
@@ -13,7 +14,7 @@ import CodeSubmit from './CodeSubmit';
  * @param {string} hints - The hints for the question
  * @returns {JSX.Element} The question component
  */
-const Question = ({questionId, description, expectedOutput, feedback = true, graded = false, prefillCode='', hints=''}) => {
+const Question = ({questionId, description, stdin, expectedOutput, feedback = true, graded = false, prefillCode='', hints=''}) => {
     return (
         <div>
             <Markdown markdown={description}/>
@@ -21,6 +22,7 @@ const Question = ({questionId, description, expectedOutput, feedback = true, gra
             <CodeSubmit 
                 key={questionId} // Added unique key prop
                 questionId={questionId} 
+                stdin={stdin}
                 expectedOutput={expectedOutput} 
                 prefillCode={prefillCode} 
                 feedback={feedback}

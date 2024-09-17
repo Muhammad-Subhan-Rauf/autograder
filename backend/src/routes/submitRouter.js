@@ -6,6 +6,7 @@ const submitRouter = express.Router();
 submitRouter.post('/submit', async (req, res) => {
     try {
             // Extract the source code and test cases from the request body
+            console.log('Request body:', req.body);
             const { source_code, stdin, expected_output } = req.body;
             
             // Judge0 submission URL
