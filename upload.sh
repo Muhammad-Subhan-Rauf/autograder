@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Upload frontend:
-rsync -avz ./frontend/dist/ fakhir@fakhirshaheen.com:/home/nginx/apps/autograder/frontend
+rsync -avz ./next/dist/ fakhir@fakhirshaheen.com:/home/nginx/apps/autograder/next
 
 # Upload backend:
 #   also exclude the things mentioned in the "exclude.txt" file:
