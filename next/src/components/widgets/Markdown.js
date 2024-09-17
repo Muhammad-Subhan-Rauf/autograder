@@ -13,10 +13,11 @@ function Markdown({markdown}) {
             
             <ReactMarkdown 
                 key={0}
-                children={markdown}
                 remarkPlugins={[remarkMath]}
                 rehypePlugins={[rehypeRaw, rehypeKatex]}
-            />
+            >
+                {markdown}
+            </ReactMarkdown>
             
         </div>
     );

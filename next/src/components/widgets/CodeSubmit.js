@@ -127,11 +127,13 @@ const CodeSubmit = ({questionId, expectedOutput, prefillCode='', feedback=false,
                     setFeedbackMessage(resultResponse.data.stderr || resultResponse.data.compile_output || 'Wrong Answer!');
                     setAcceptStatus(false);
                     showErrorToast('Wrong Answer!');
+                    updateMarks(questionId, 0);  // Reset the score to 0 for errors
                 } else if (resultResponse.data.status.id > 4) {  // Error case (compile error, runtime error)
                     setError(true);
                     setFeedbackMessage(resultResponse.data.stderr || resultResponse.data.compile_output || "An error occurred.");
                     setAcceptStatus(false);
                     showErrorToast('Compilation or execution failed!');
+                    updateMarks(questionId, 0);  // Reset the score to 0 for errors
                 }
             } catch (err) {
                 console.error('Error fetching result:', err);
@@ -270,9 +272,9 @@ const CodeSubmit = ({questionId, expectedOutput, prefillCode='', feedback=false,
 
                         <h2 className="text-xl font-bold mb-4">Hints</h2>
                         <ul className="list-disc list-inside text-gray-700">
-                            <li>Make sure you're printing the right format.</li>
+                            <li>Make sure you&#39;re printing the right format.</li>
                             <li>Check your variable names carefully.</li>
-                            <li>Try using a different approach if you're stuck.</li>
+                            <li>Try using a different approach if you&#39;re stuck.</li>
                         </ul>
                     </div>
                 </div>

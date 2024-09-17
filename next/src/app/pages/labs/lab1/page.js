@@ -74,6 +74,7 @@ print("7")
                 
                 {questions.map(question => (
                     <Question
+                        key={question.key}
                         questionId={question.key}
                         description={question.description}
                         expectedOutput={question.expectedOutput}
