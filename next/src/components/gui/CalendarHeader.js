@@ -7,7 +7,7 @@ const CalendarHeader = () => {
 
     useEffect(() => {
         // Fetch the JSON data directly from the public folder
-        fetch('portal/calendarData.json')
+        fetch('calendarData.json')
             .then(response => response.json())
             .then(data => setContent(data))
             .catch(error => console.error('Error fetching data:', error));
