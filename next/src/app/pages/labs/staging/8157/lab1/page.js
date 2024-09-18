@@ -160,12 +160,14 @@ $$8! = 8 \\times 7 \\times 6 \\times 5 \\times 4 \\times 3 \\times 2 \\times 1$$
             key: 'q9',
             description:`
 ## Question 9
-Write code that calculates the  factorial of 8 and prints it on the screen:
+The user enters enters one of two possible color values: 'red' or 'green'. If the user enters 'red', print 'STOP'. 
 
-$$8! = 8 \\times 7 \\times 6 \\times 5 \\times 4 \\times 3 \\times 2 \\times 1$$
+If the user enters 'green', print 'GO'. 
+
+If the user enters anything else, print 'INVALID'.
 `,
-            stdin: '',
-            expectedOutput: '40320\n',
+            stdin: 'RED',
+            expectedOutput: 'GO\n',
             prefillCode:'',
             feedback: true,
         },
@@ -189,6 +191,52 @@ You must **round** the area and circumference to the nearest integer before prin
             prefillCode:'',
             feedback: true,
         },
+        { 
+            key: 'q11',
+            description:`
+## Question 11
+Get three integers from the user, store then in variables a,b and c. Print the sum of cubes of the three numbers:
+
+$$a^3+b^3+c^3$$
+`,
+            stdin: '500\n600\n700\n',
+            expectedOutput: '684000000\n',
+            prefillCode:'',
+            feedback: true,
+        },
+        { 
+            key: 'q12',
+            description:`
+## Question 12
+Get an integer **x** as input from the user. 
+
+Print:  **positive** , if **x** is positive
+
+Print:  **negative** , if **x** is negative
+
+Print:  **zero** , if **x** is equal to zero
+`,
+            stdin: '-1000001',
+            expectedOutput: 'negative\n',
+            prefillCode:'',
+            feedback: true,
+        },
+        { 
+            key: 'q13',
+            description:`
+## Question 13
+Get a string from the user, having atleast 10 characters in it.
+
+Combine the first four characters and the last four characters of the string and print the result.
+
+*PS: You must use **string slicing** to extract the substrings.*
+`,
+            stdin: 'abcdefghijkl',
+            expectedOutput: 'abcdijkl\n',
+            prefillCode:'',
+            feedback: true,
+        },
+        
     ];
 
 

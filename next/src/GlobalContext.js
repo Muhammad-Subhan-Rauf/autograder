@@ -29,6 +29,8 @@ export const GlobalProvider = ({ children }) => {
         q8: 0,
         q9: 0,
         q10: 0,
+        q11: 0,
+        q12: 0,
     });
 
     // Function to update marks for a specific question

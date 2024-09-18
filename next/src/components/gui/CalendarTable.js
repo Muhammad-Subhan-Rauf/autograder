@@ -9,7 +9,7 @@ export default function CalendarTable() {
 
     useEffect(() => {
     // Fetch the JSON data directly from the public folder
-        fetch('/calendarData.json')
+        fetch('calendarData.json')
             .then(response => response.json())
             .then(data => setData(data))
             .catch(error => console.error('Error fetching data:', error));
